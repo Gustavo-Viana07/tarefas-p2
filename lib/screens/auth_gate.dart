@@ -15,7 +15,7 @@ class AuthGate extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = AuthService();
     return StreamBuilder<User?>(
-      stream: authService.authStateChanges,
+      stream: authService.userChanges,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Scaffold(

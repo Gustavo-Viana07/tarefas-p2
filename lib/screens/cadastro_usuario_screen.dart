@@ -16,6 +16,10 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmationController = TextEditingController();
+  final _nameFocusNode = FocusNode();
+  final _emailFocusNode = FocusNode();
+  final _passwordFocusNode = FocusNode();
+  final _confirmationFocusNode = FocusNode();
   bool _isLoading = false;
   String? _errorMessage;
 
@@ -25,6 +29,10 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _confirmationController.dispose();
+    _nameFocusNode.dispose();
+    _emailFocusNode.dispose();
+    _passwordFocusNode.dispose();
+    _confirmationFocusNode.dispose();
     super.dispose();
   }
 
@@ -87,7 +95,10 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
                       const SizedBox(height: 20),
                       TextFormField(
                         controller: _nameController,
+                        focusNode: _nameFocusNode,
                         textCapitalization: TextCapitalization.words,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) => _emailFocusNode.requestFocus(),
                         decoration: const InputDecoration(
                           labelText: 'Nome',
                           prefixIcon: Icon(Icons.person_outline),
@@ -100,7 +111,11 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _emailController,
+                        focusNode: _emailFocusNode,
                         keyboardType: TextInputType.emailAddress,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) =>
+                            _passwordFocusNode.requestFocus(),
                         decoration: const InputDecoration(
                           labelText: 'E-mail',
                           prefixIcon: Icon(Icons.email_outlined),
@@ -118,7 +133,11 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _passwordController,
+                        focusNode: _passwordFocusNode,
                         obscureText: true,
+                        textInputAction: TextInputAction.next,
+                        onFieldSubmitted: (_) =>
+                            _confirmationFocusNode.requestFocus(),
                         decoration: const InputDecoration(
                           labelText: 'Senha',
                           prefixIcon: Icon(Icons.lock_outline),
@@ -136,7 +155,10 @@ class _CadastroUsuarioScreenState extends State<CadastroUsuarioScreen> {
                       const SizedBox(height: 14),
                       TextFormField(
                         controller: _confirmationController,
+                        focusNode: _confirmationFocusNode,
                         obscureText: true,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (_) => _register(),
                         decoration: const InputDecoration(
                           labelText: 'Confirme a senha',
                           prefixIcon: Icon(Icons.lock_reset_outlined),

@@ -11,7 +11,7 @@ class AuthService {
   final FirebaseAuth _auth;
   final FirebaseDatabase _database;
 
-  Stream<User?> get authStateChanges => _auth.authStateChanges();
+  Stream<User?> get userChanges => _auth.userChanges();
 
   Future<Usuario> register({
     required String nome,
@@ -28,6 +28,7 @@ class AuthService {
     }
 
     await user.updateDisplayName(nome.trim());
+    await user.reload();
     await _database.ref('users/${user.uid}/profile').set({
       'nome': nome.trim(),
       'email': email.trim(),

@@ -30,13 +30,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedPage = 0;
-  late final Usuario _usuario = Usuario(
-    uid: widget.user.uid,
-    nome: widget.user.displayName?.trim().isNotEmpty == true
-        ? widget.user.displayName!
-        : widget.user.email ?? 'Usuário',
-    email: widget.user.email ?? '',
-  );
+  Usuario get _usuario {
+    final displayName = widget.user.displayName?.trim();
+    return Usuario(
+      uid: widget.user.uid,
+      nome: displayName != null && displayName.isNotEmpty
+          ? displayName
+          : widget.user.email ?? 'Usuário',
+      email: widget.user.email ?? '',
+    );
+  }
 
   String get _title => switch (_selectedPage) {
     0 => 'Início',
